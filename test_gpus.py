@@ -54,11 +54,11 @@ class GPUTest(unittest.TestCase):
     def ensure_pip_installed():
         """Ensure `pip` is installed for the current Python interpreter."""
         try:
-            subprocess.check_call([sys.executable, "-m", "pip", "--version"])
+            subprocess.check_call([sys.executable, "-m", "pip", "--version"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
         except subprocess.CalledProcessError:
             logging.info(f"Pip not installed. Installing...")
-            subprocess.check_call(["sudo", "apt", "update"])
-            subprocess.check_call(["sudo", "apt", "install", "-y", "python3-pip"])
+            subprocess.check_call(["sudo", "apt", "update"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+            subprocess.check_call(["sudo", "apt", "install", "-y", "python3-pip"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 
     @staticmethod
     def ensure_package_installed(package_name):
@@ -71,7 +71,7 @@ class GPUTest(unittest.TestCase):
             __import__(package_name)
         except ImportError:
             logging.info(f"{package_name} not installed. Installing...")
-            subprocess.check_call([sys.executable, "-m", "pip", "install", package_name])
+            subprocess.check_call([sys.executable, "-m", "pip", "install", package_name], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
             __import__(package_name)
 
     @staticmethod
